@@ -4,6 +4,7 @@ const state = {
         {url:'/subject',color:'grey',name:'Subject'},
     ],
     currentTab:0,
+    layout: 'mainLayout'
 }
 
 
@@ -12,8 +13,10 @@ const mutations = {
 
         if(isNaN(tabIndex)) return state.currentTab = state.tabs.indexOf(state.tabs.find((tab,index) => tab.url == tabIndex  ))
         else return state.currentTab = tabIndex ;
+    },
 
-        
+    SET_LAYOUT (state, payload) {
+        state.layout = payload
     }
 }
 

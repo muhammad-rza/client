@@ -11,6 +11,11 @@ import HeaderList from '@/components/Vocabulary/HeaderList.vue';
 export default {
     components :{
         HeaderList
+    },
+
+
+    created() {
+        
     }
 }
 </script>

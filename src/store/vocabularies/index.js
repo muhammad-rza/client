@@ -1,3 +1,5 @@
+import axios from '@/plugins/axios';
+
 const state = {
     vocabularyMenu: [
         {
@@ -38,9 +40,30 @@ const state = {
     ],
     vocabularies:[],
     vocabularyCurrentTab:0,
+    vocabulary:{},
+    message:"",
 
 }
 
+
+const getters = {
+
+    getCurrentVocabularyTab(state) {
+        var tab = state.vocabularyMenu[state.vocabularyCurrentTab];
+        return (!!tab) ? tab : false
+    },
+    getVocabularyMenu(state) {
+        return state.vocabularyMenu;
+    },
+    getAllVocabularies(state) {
+        return state.vocabularies;
+    },
+    getVocabular(state) {
+        return state.vocabulary;
+    },
+
+
+}
 
 const mutations = {
 
@@ -59,29 +82,48 @@ const mutations = {
         }
 
         
+    },
+    updateVocabularies(state,payload) {
+        // return state.vocabularies = payload;
+
+        // console.log(payload.data.vocabulary);
+    },
+    updateVocabulary(state,payload) {
+
+        // console.log(payload); 
+        state.vocabulary = payload.data.vocabulary;
     }
 
 }
 
-const getters = {
 
-    getCurrentVocabularyTab(state) {
-        var tab = state.vocabularyMenu[state.vocabularyCurrentTab];
-        return (!!tab) ? tab : false
-    },
-    getVocabularyMenu(state) {
-        return state.vocabularyMenu;
-    },
-    getAllVocabularies(state) {
-        return state.vocabularies;
-    }
+const actions = {
+    getByLang({commit}) {
 
+    },
+    getAllVocabulary({commit}) {
+
+    },
+    getVocabulary({commit},id) {
+
+        return axios.get(`vocabularies/${(typeof id ==='undefined' ? '' : id)}`).then((data)=>{
+            console.log(data)
+            if(typeof id ==='undefined') {
+                commit('updateVocabularies',data)
+            }else {
+                commit('updateVocabulary',data)
+            }
+
+        }).catch((error)=>{})
+
+    },
 }
-
 
 export default {
     namespaced: true,
     state,
+    actions,
     getters,
-    mutations
+    mutations,
+    
 }

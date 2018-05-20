@@ -19,7 +19,7 @@
     </v-card> -->
   <v-tab-item>
     <v-card flat>
-        <WaitingVocabulary />
+        <WaitingVocabulary :vocabulary="getVocabular" />        
     </v-card>
   </v-tab-item>
  
@@ -30,19 +30,27 @@
 <script>
 import { mapGetters } from "vuex";
 
-import WaitingVocabulary from '@/components/Vocabulary/Waiting.vue';
+import WaitingVocabulary from "@/components/Vocabulary/Waiting.vue";
+import DoneVocabulary from "@/components/Vocabulary/Done.vue";
+import DeletedVocabulary from "@/components/Vocabulary/Deleted.vue";
+import FavoriteVocabulary from "@/components/Vocabulary/Favorite.vue";
+import RepeatVocabulary from "@/components/Vocabulary/Repeat.vue";
 
 export default {
   data: () => ({
     tabs: null,
     text: "consequat."
   }),
-  components :{
+  components: {
     WaitingVocabulary
   },
 
   computed: {
-    ...mapGetters("vocabularies", ["getAllVocabularies", "getVocabularyMenu"]),
+    ...mapGetters("vocabularies", [
+      "getAllVocabularies",
+      "getVocabularyMenu",
+      "getVocabular"
+    ]),
     indexTab() {
       return this.$store.getters["vocabularies/getVocabularyMenu"].indexOf(
         this.$store.getters["vocabularies/getCurrentVocabularyTab"]
@@ -52,8 +60,15 @@ export default {
 
   methods: {
     swipe(direction) {
-      console.log(direction);
+      // console.log(direction);
     }
+  },
+
+  created() {
+    this.$store.dispatch(
+      "vocabularies/getVocabulary",
+      "5b002ba758ac9b1e0c2dddcc"
+    );
   }
 };
 </script>
